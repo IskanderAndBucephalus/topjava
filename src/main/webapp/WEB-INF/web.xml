@@ -5,7 +5,7 @@
          version="3.1">
 
     <display-name>Topjava</display-name>
-
+<!-- Equivalent of @Webservlet
     <servlet>
         <servlet-name>userServlet</servlet-name>
         <servlet-class>ru.javawebinar.topjava.web.UserServlet</servlet-class>
@@ -16,4 +16,14 @@
         <url-pattern>/users</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>mealsServlet</servlet-name>
+        <servlet-class>ru.javawebinar.topjava.web.MealsServlet</servlet-class>
+        <load-on-startup>0</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>mealsServlet</servlet-name>
+        <url-pattern>/meals</url-pattern>
+    </servlet-mapping>
+ -->
 </web-app>
