@@ -6,6 +6,16 @@
 
     <display-name>Topjava</display-name>
 
+    <error-page>
+        <error-code>500</error-code>
+        <location>/meals</location>
+    </error-page>
+
+    <error-page>
+        <exception-type>java.lang.IllegalArgumentException</exception-type>
+        <location>/meals</location>
+    </error-page>
+
     <servlet>
         <servlet-name>userServlet</servlet-name>
         <servlet-class>ru.javawebinar.topjava.web.UserServlet</servlet-class>
