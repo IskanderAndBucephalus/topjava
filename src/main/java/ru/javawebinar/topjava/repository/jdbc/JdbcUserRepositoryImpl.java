@@ -14,6 +14,8 @@ import ru.javawebinar.topjava.repository.UserRepository;
 import javax.sql.DataSource;
 import java.util.List;
 
+import static org.springframework.dao.support.DataAccessUtils.*;
+
 @Repository
 public class JdbcUserRepositoryImpl implements UserRepository {
 
@@ -59,20 +61,25 @@ public class JdbcUserRepositoryImpl implements UserRepository {
 
     @Override
     public boolean delete(int id) {
-        return jdbcTemplate.update("DELETE FROM users WHERE id=?", id) != 0;
+        MapSqlParameterSource map = new MapSqlParameterSource()
+                .addValue("id", id);
+        return namedParameterJdbcTemplate.update("DELETE FROM users WHERE id=:id", map) != 0;
     }
 
     @Override
     public User get(int id) {
-        List<User> users = jdbcTemplate.query("SELECT * FROM users WHERE id=?", ROW_MAPPER, id);
-        return DataAccessUtils.singleResult(users);
+        MapSqlParameterSource map = new MapSqlParameterSource()
+                .addValue("id", id);
+        List<User> users = namedParameterJdbcTemplate.query("SELECT * FROM users WHERE id=:id", map, ROW_MAPPER);
+        return singleResult(users);
     }
 
     @Override
     public User getByEmail(String email) {
-//        return jdbcTemplate.queryForObject("SELECT * FROM users WHERE email=?", ROW_MAPPER, email);
-        List<User> users = jdbcTemplate.query("SELECT * FROM users WHERE email=?", ROW_MAPPER, email);
-        return DataAccessUtils.singleResult(users);
+        MapSqlParameterSource map = new MapSqlParameterSource()
+                .addValue("email", email);
+        List<User> users = namedParameterJdbcTemplate.query("SELECT * FROM users WHERE email=:email", map, ROW_MAPPER);
+        return singleResult(users);
     }
 
     @Override
