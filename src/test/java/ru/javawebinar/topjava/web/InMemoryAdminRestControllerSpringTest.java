@@ -13,11 +13,11 @@ import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.util.Collection;
 
-import static java.lang.Integer.*;
+import static java.lang.Integer.MIN_VALUE;
 import static org.junit.Assert.assertEquals;
 import static ru.javawebinar.topjava.UserTestData.ADMIN;
 
-@ContextConfiguration("classpath:spring/spring-*.xml")
+@ContextConfiguration("classpath:spring/spring-test.xml")
 @RunWith(SpringRunner.class)
 public class InMemoryAdminRestControllerSpringTest {
 

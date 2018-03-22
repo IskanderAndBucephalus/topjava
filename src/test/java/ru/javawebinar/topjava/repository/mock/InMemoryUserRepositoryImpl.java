@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository;
 import ru.javawebinar.topjava.UserTestData;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.UserRepository;
+import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.util.Comparator;
 import java.util.List;
@@ -19,7 +20,7 @@ import static ru.javawebinar.topjava.UserTestData.USER;
 public class InMemoryUserRepositoryImpl implements UserRepository {
 
     private Map<Integer, User> repository = new ConcurrentHashMap<>();
-    private AtomicInteger counter = new AtomicInteger(100);
+    private AtomicInteger counter = new AtomicInteger(100001);
 
     public void init() {
         repository.clear();
@@ -31,6 +32,9 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
     public User save(User user) {
         if (user.isNew()) {
             user.setId(counter.incrementAndGet());
+            for (User u : repository.values()) {
+                if (u.getEmail().equalsIgnoreCase(user.getEmail())) throw new NotFoundException("");
+            }
             repository.put(user.getId(), user);
             return user;
         }

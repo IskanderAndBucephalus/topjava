@@ -4,6 +4,10 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:component-scan base-package="ru.javawebinar.topjava.repository.mock"/>
+    <context:component-scan base-package="ru.javawebinar.**.repository.mock"/>
+    <context:component-scan base-package="ru.javawebinar.topjava.service"/>
 
+    <bean id="userService" class="ru.javawebinar.topjava.service.UserServiceImpl">
+        <constructor-arg value="repository" type="ru.javawebinar.topjava.repository.mock.InMemoryUserRepositoryImpl"/>
+    </bean>
 </beans>
