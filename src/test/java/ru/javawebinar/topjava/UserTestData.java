@@ -11,12 +11,17 @@ import static ru.javawebinar.topjava.model.AbstractBaseEntity.START_SEQ;
 public class UserTestData {
     public static final int USER_ID = START_SEQ;
     public static final int ADMIN_ID = START_SEQ + 1;
+    public static final int USER_WITHOUT_MEALS_ID = 100002;
+
 
     public static final User USER = new User(USER_ID, "User", "user@yandex.ru", "password", Role.ROLE_USER);
+    public static final User USER_WITHOUT_MEALS = new User(USER_WITHOUT_MEALS_ID, "UserWithoutMeal", "userWithoutMeal@yandex.ru", "password", Role.ROLE_USER);
     public static final User ADMIN = new User(ADMIN_ID, "Admin", "admin@gmail.com", "admin", Role.ROLE_ADMIN);
+    public static final User USER_WITH_MEALS = new User(USER_ID, "User", "user@yandex.ru", "password",
+            Role.ROLE_USER, Arrays.asList(MealTestData.MEAL6, MealTestData.MEAL5, MealTestData.MEAL4, MealTestData.MEAL3, MealTestData.MEAL2, MealTestData.MEAL1));
 
     public static void assertMatch(User actual, User expected) {
-        assertThat(actual).isEqualToIgnoringGivenFields(expected, "registered", "roles");
+        assertThat(actual).isEqualToIgnoringGivenFields(expected, "registered", "roles", "meals");
     }
 
     public static void assertMatch(Iterable<User> actual, User... expected) {
@@ -24,6 +29,6 @@ public class UserTestData {
     }
 
     public static void assertMatch(Iterable<User> actual, Iterable<User> expected) {
-        assertThat(actual).usingElementComparatorIgnoringFields("registered", "roles").isEqualTo(expected);
+        assertThat(actual).usingElementComparatorIgnoringFields("registered", "roles", "meals").isEqualTo(expected);
     }
 }

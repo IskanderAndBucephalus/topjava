@@ -15,8 +15,7 @@ import java.util.Optional;
 public interface CrudUserRepository extends JpaRepository<User, Integer> {
     @Transactional
     @Modifying
-//    @Query(name = User.DELETE)
-    @Query("DELETE FROM User u WHERE u.id=:id")
+    @Query(name = User.DELETE)
     int delete(@Param("id") int id);
 
     @Override
@@ -30,4 +29,7 @@ public interface CrudUserRepository extends JpaRepository<User, Integer> {
     List<User> findAll(Sort sort);
 
     User getByEmail(String email);
+
+    @Query("SELECT u FROM User u LEFT JOIN FETCH u.meals WHERE u.id = :id")
+    User getUserWithMeals(@Param("id") int id);
 }
