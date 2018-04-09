@@ -3,20 +3,22 @@ package ru.javawebinar.topjava.service;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.stream.Stream;
 
 import static ru.javawebinar.topjava.MealTestData.*;
-import static ru.javawebinar.topjava.MealTestData.MEAL1;
-import static ru.javawebinar.topjava.MealTestData.MEAL2;
 import static ru.javawebinar.topjava.UserTestData.ADMIN_ID;
 import static ru.javawebinar.topjava.UserTestData.USER_ID;
 
 
 abstract public class AbstractMealServiceTest extends AbstractServiceTest {
+    @Autowired
+    Environment env;
 
     @Autowired
     protected MealService service;
@@ -73,6 +75,8 @@ abstract public class AbstractMealServiceTest extends AbstractServiceTest {
 
     @Test
     public void getBetween() throws Exception {
+        Stream.of(env.getActiveProfiles()).forEach(System.out::println);
+
         assertMatch(service.getBetweenDates(
                 LocalDate.of(2015, Month.MAY, 30),
                 LocalDate.of(2015, Month.MAY, 30), USER_ID), MEAL3, MEAL2, MEAL1);
